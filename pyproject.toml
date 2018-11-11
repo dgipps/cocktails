@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "cocktails"
+version = "0.1.0"
+description = ""
+authors = ["Daniel Gipps <dgipps@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.7"
+django = "^2.1"
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry>=0.12"]
+build-backend = "poetry.masonry.api"
