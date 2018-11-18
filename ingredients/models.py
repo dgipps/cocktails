@@ -2,27 +2,27 @@ from django.db import models
 
 # Create your models here.
 
-class Ingredient(models.model):
-    name = models.charField(length=128)
-    categories = models.ManyToManyField(IngredientCategory)
-
-
-class IngredientCategory(models.model):
+class IngredientCategory(models.Model):
     SPECIFICITY_CHOICES = (
         (1, 'Interchangeable'),
         (2, 'Similar'),
         (3, 'Classification')
     )
-    name = models.charField(length=128)
-    specificity = models.integerField(choices=SPECIFICITY_CHOICES)
+    name = models.CharField(max_length=128, unique=True)
+    specificity = models.IntegerField(choices=SPECIFICITY_CHOICES)
 
 
-class Recipe(models.model):
-    name = models.charField(length=128)
-    reference = models.charField(length=128)
-    instructions = models.charField(length=256)
+class Ingredient(models.Model):
+    name = models.CharField(max_length=128, unique=True)
+    categories = models.ManyToManyField(IngredientCategory, related_name='ingredients')
 
 
-class RecipeIngredient(models.model):
-    recipe = models.foreignKey(Recipe, reverse_name='ingredients')
-    ingredient = models.foreignKey(Ingredient, reverse_name='recipes')
+class Recipe(models.Model):
+    name = models.CharField(max_length=128, unique=True)
+    reference = models.CharField(max_length=128)
+    instructions = models.CharField(max_length=256)
+
+
+class RecipeIngredient(models.Model):
+    recipe = models.ForeignKey(Recipe, related_name='ingredients', on_delete=models.CASCADE)
+    ingredient = models.ForeignKey(Ingredient, related_name='recipes', on_delete=models.CASCADE)

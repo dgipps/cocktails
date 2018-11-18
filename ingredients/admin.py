@@ -1,3 +1,11 @@
 from django.contrib import admin
 
-# Register your models here.
+from ingredients.models import (
+    Ingredient,
+    IngredientCategory,
+    Recipe,
+)
+
+admin.site.register(Ingredient)
+admin.site.register(IngredientCategory)
+admin.site.register(Recipe)
