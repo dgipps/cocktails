@@ -33,8 +33,7 @@ class Command(BaseCommand):
                 page = row[5]
                 instructions = row[6]
 
-                if not recipe_name:
-                    print('skipping')
+                if not (recipe_name and ingredient_name):
                     continue
                     ## todo: instructions can trail past recipe_name
 
