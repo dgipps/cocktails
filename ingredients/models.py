@@ -41,8 +41,11 @@ class RecipeIngredient(models.Model):
 
 
 class Inventory(models.Model):
-    ingredient = models.ForeignKey(Ingredient, on_delete=models.CASCADE)
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='inventory')
+    ingredient = models.ForeignKey(Ingredient, on_delete=models.CASCADE, related_name='inventories')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='inventories')
+
+    def __str__(self):
+        return str(self.ingredient)
 
     class Meta:
         verbose_name_plural = "inventories"

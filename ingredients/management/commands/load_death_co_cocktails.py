@@ -7,6 +7,7 @@ from ingredients.models import (
     Ingredient,
     IngredientCategory,
     Recipe,
+    RecipeIngredient,
 )
 
 
@@ -40,6 +41,12 @@ class Command(BaseCommand):
                 recipe = self.add_or_get_recipe(recipe_name, page)
                 categories = self.add_or_get_categories(category_names)
                 ingredient = self.add_or_get_ingredient(ingredient_name, categories)
+
+                if not recipe.ingredients.filter(ingredient_id=ingredient.id).exists():
+                    RecipeIngredient.objects.create(
+                        recipe=recipe,
+                        ingredient=ingredient,
+                    )
 
                 if instructions:
                     if recipe.instructions:
