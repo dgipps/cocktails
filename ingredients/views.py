@@ -13,17 +13,21 @@ class RecipeViewSet(viewsets.ModelViewSet):
     def list(self, request):
         user = request.user
 
-        available_categories = IngredientCategory.objects.filter(
-            ingredients__inventories__user_id=user.id,
+        # available_categories = IngredientCategory.objects.filter(
+        #     ingredients__inventories__user_id=user.id,
+        # )
+        recipes = Recipe.objects.raw(
+            f'''
+            SELECT *
+            FROM "ingredients_recipe" as IR
+            WHERE NOT EXISTS (
+                SELECT V1."ingredient_id" FROM "ingredients_recipeingredient" V1
+                    WHERE V1."ingredient_id" NOT IN (
+                        SELECT ingredient_id from ingredients_inventory where user_id = {user.id}
+                    ) AND
+                    IR."id" = V1."recipe_id"
+            )
+            '''
         )
-
-        available_ingredients = Ingredient.objects.filter(
-            inventories__user_id=user.id,
-        ).values_list('id')
-        print(available_ingredients)
-        recipes = Recipe.objects.filter(
-            ingredients__ingredient_id__in=available_ingredients,
-        )
-        print(recipes)
         serializer = RecipeSerializer(recipes, many=True)
         return Response(serializer.data)
