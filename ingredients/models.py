@@ -11,6 +11,9 @@ class IngredientCategory(models.Model):
     name = models.CharField(max_length=128, unique=True)
     specificity = models.IntegerField(choices=SPECIFICITY_CHOICES)
 
+    def __str__(self):
+        return f'{self.name}: {self.SPECIFICITY_CHOICES[self.specificity]}'
+
     class Meta:
         verbose_name_plural = "ingredient categories"
 
