@@ -29,5 +29,7 @@ class RecipeViewSet(viewsets.ModelViewSet):
             )
             '''
         )
+        print(recipes)
         serializer = RecipeSerializer(recipes, many=True)
+        print(serializer)
         return Response(serializer.data)
