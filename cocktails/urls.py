@@ -22,7 +22,7 @@ from ingredients import views
 
 
 router = routers.DefaultRouter()
-router.register(r'recipes', views.RecipeViewSet)
+router.register(r'recipes', views.RecipeViewSet, basename='recipe')
 
 
 urlpatterns = [
