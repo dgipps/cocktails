@@ -36,7 +36,6 @@ class Command(BaseCommand):
 
                 if not (recipe_name and ingredient_name):
                     continue
-                    ## todo: instructions can trail past recipe_name
 
                 recipe = self.add_or_get_recipe(recipe_name, page)
                 categories = self.add_or_get_categories(category_names)
